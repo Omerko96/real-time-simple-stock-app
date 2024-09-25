@@ -20,7 +20,6 @@
     "@angular/router": "^18.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "yahoo-finance2": "^2.12.4",
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
