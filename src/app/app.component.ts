@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {StockApiService} from "./services/stock-api.service";
+import {StockService} from "./services/stock.service";
 
 @Component({
   selector: 'app-root',
@@ -11,12 +11,10 @@ import {StockApiService} from "./services/stock-api.service";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private stockApiService: StockApiService) {
+  constructor(private stockService: StockService) {
   }
 
   ngOnInit() {
-    this.stockApiService.getStockData('AAPL').subscribe((data: any) => {
-      console.log('Data', data);
-    });
+    this.stockService.getStocksData();
   }
 }
