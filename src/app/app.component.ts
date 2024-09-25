@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {StockService} from "./services/stock.service";
+import {IStock} from "./models/stock.model";
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stockService.getStocksData();
+    this.stockService.getStocksData()
+      .subscribe((stocks: IStock) => {
+        console.log('Stocks:', stocks);
+      });
   }
 }

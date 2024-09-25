@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {StockApiService} from "./stock-api.service";
+import {Observable, map} from "rxjs";
+import {IStock} from "../models/stock.model";
 
 interface IToggledStock {
   name: string;
@@ -31,12 +33,10 @@ export class StockService {
 
   constructor(private stockApiService: StockApiService) { }
 
-  public getStocksData(): void {
+  public getStocksData(): Observable<IStock> {
     const enabledStocks = this.stocks.filter(stock => stock.enabled);
     const tickers = enabledStocks.map(stock => stock.name).join(',');
 
-    this.stockApiService.getStockData(tickers).subscribe((data: any) => {
-      console.log('Data', data);
-    });
+    return this.stockApiService.getStockData(tickers);
   }
 }
