@@ -11,7 +11,7 @@ export class StockApiService {
 
   getStockData(ticker: string): any {
     return this.http.get(
-      `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/2023-01-09/2023-02-10?adjusted=true`,
+      `https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=AAPL,GOOG,MSFT,TSLA`,
       {
         headers: {
           'Authorization': `Bearer ${environment.polygon.apiKey}`
