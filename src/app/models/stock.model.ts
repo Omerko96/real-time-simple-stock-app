@@ -7,12 +7,13 @@ export interface IStock {
 
 export interface ITickers {
   ticker: string;
-  todayChange: number;
+  todaysChange: number;
   todaysChangePercent: number;
-  updated: number;
+  updated: number | Date;
   day: ITickerDay;
   min: ITickerMin;
   prevDay: ITickerDay;
+  isActive: boolean;
 }
 
 export interface ITickerDay {

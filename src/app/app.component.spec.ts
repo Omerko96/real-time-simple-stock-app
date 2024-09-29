@@ -1,11 +1,29 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {StockService} from "./services/stock.service";
+import {of} from "rxjs";
+import {ITickers} from "./models/stock.model";
+
+const stocksMock = jasmine.createSpyObj('StockService', ['getStocksData']);
+stocksMock.getStocksData.and.returnValue(of({ tickers: [] }));
 
 describe('AppComponent', () => {
+  let app: AppComponent;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, HttpClientTestingModule],
+      providers: [
+        {
+          provide: StockService,
+          useValue: stocksMock
+        }
+      ]
     }).compileComponents();
+
+    const fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
   });
 
   it('should create the app', () => {
@@ -14,16 +32,12 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'real-time-simple-stock-app' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('real-time-simple-stock-app');
-  });
+  it('should call getStocksData and get returned value', () => {
+    const tickers: ITickers[] = [];
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, real-time-simple-stock-app');
+    app.ngOnInit();
+
+    expect(stocksMock.getStocksData).toHaveBeenCalled();
+    expect(app.tickers).toEqual(tickers);
   });
 });
